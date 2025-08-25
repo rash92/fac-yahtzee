@@ -9,6 +9,7 @@ class Game {
 
         //keyboard controls
         this.canvas.addEventListener("keydown", (e) => {
+            console.log("keydown detected")
             if (e.key === " ") {
             // space to (re)roll dice?
             };
