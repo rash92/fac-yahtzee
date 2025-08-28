@@ -19,21 +19,18 @@ class Game {
         }
         document.getElementById("submit").addEventListener('click', ()=>this.submitScore())
         document.getElementById("toggle_rules").addEventListener('click', ()=>this.toggleRules())
-        console.log("looping through scorecard", this.ScoreCard)
         for (let key in this.ScoreCard){
             let hand = this.ScoreCard[key].children[0]
             //adding click event listener to the name of the hand, which should then submit
             // the score if it can for the cell of that hand for the current player.
             hand.addEventListener('click', ()=>this.selectHand(hand.innerText))
-            console.log(hand)
         }
 
     }
 
     selectHand(hand){
-        console.log("tried to select hand: ", hand, "for event: ", e.target)
         for ( let die of this.dice){
-            console.log("trying to score with: ", die.value)
+            console.log("trying to score with: ", die.value, " on hand: ", hand)
         }
     }
 
@@ -91,15 +88,12 @@ class Game {
     }
 
     createDiceSet(number_of_dice, colour){
-        console.log("creating dice set")
         let diceSet = []
         for (let i = 1; i<=number_of_dice; i++){
            let diceElem = document.getElementById("dice"+i)
            let diceObj = new Dice(diceElem, colour)
            diceSet.push(diceObj)
-           console.log("added dice to array: ", diceElem, diceObj )
         }
-        console.log("after dice set creation loop: ", diceSet)
         return diceSet
     }
 
@@ -107,10 +101,8 @@ class Game {
         // should highlight which hands are clickable, make them able to be clicked,
         // change to next player and reset rolls so can't submit without rolling
         // change that cell to be locked so it can't be edited until restarting the game
-        console.log("attempting to submit score for player: ", this.currentPlayer)
         this.rolls = 0
         this.currentPlayer = (this.currentPlayer) % (this.players)+1
-        console.log("changed to player: ", this.currentPlayer)
     }
 
     calculateScores(){
@@ -185,15 +177,11 @@ class Dice {
     changeValue(newValue){
         this.value = newValue
         this.image = this.imagePath + this.colour + this.value + "-64.png"
-
         this.elem.src = this.image
-        console.log("image url changed to: ", this.elem.src, this.image)
         //css/ animation stuff?
     }
 }
 
 window.addEventListener("load", ()=>{
     const game = new Game()
-    console.log("game created: ", game)
-
 })
