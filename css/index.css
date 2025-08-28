@@ -7,16 +7,11 @@
 }
 
 #rollArea {
-    background-color: aqua;
-    height: 500px;
+    background-color: var(--color2);
+    height: 440px;
     width: 500px;
 }
 
-#storeArea {
-    background-color: beige;
-    height: 500px;
-    width: 500px;
-}
 
 .dice {
     position: relative;
