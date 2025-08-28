@@ -161,9 +161,7 @@ class Dice {
             return
         }
         let newValue = Math.ceil(Math.random()*6)
-
         this.changeValue(newValue)
-        console.log("after roll, value: ", newValue, " die object: ", this)
     }
 
     lock(){
@@ -177,7 +175,6 @@ class Dice {
     }
 
     toggleLock(){
-        console.log("toggle lock triggered", this.locked, this.lock, this)
         if (this.locked){
             this.unlock()
         }else{
@@ -188,7 +185,9 @@ class Dice {
     changeValue(newValue){
         this.value = newValue
         this.image = this.imagePath + this.colour + this.value + "-64.png"
+
         this.elem.src = this.image
+        console.log("image url changed to: ", this.elem.src, this.image)
         //css/ animation stuff?
     }
 }
