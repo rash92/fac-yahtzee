@@ -151,7 +151,7 @@ class Dice {
         this.value = 1
         this.colour = colour
         this.locked = false
-        this.imagePath = "/images/dice/64px/"
+        this.imagePath = "images/dice/64px/"
         this.image = this.imagePath + this.colour + this.value + "-64.png"
         this.elem.addEventListener('click',()=>this.toggleLock())
     }
