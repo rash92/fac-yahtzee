@@ -1,0 +1,31 @@
+#rollArea {
+    background-color: aqua;
+    height: 500px;
+    width: 500px;
+}
+
+#storeArea {
+    background-color: beige;
+    height: 500px;
+    width: 500px;
+}
+
+.dice {
+    position: relative;
+    top: 25px;
+    left: 70px;
+}
+
+.locked {
+    position: relative;
+    top: 25px;
+    left: 50px;
+}
+
+#divider {
+    background-color: black;
+    height: 5px;
+    width: 500px;
+    position: relative;
+    top: 100px;
+}

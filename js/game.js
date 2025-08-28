@@ -40,14 +40,14 @@ class Game {
 
     }
 
-    createDiceSet(){
-        d1 = new Dice()
-        d2 = new Dice()
-        d3 = new Dice()
-        d4 = new Dice()
-        d5 = new Dice()
+    createDiceSet(number_of_dice){
+        diceSet = []
+        for (let i = 1; i<=number_of_dice; i++){
+           let diceElem = document.getElementById("dice"+i)
+           diceSet.push(new Dice(diceElem))
+        }
 
-        return [d1,d2,d3,d4,d5]
+        return diceSet
     }
 
     render(deltaTime) {
@@ -63,9 +63,26 @@ class Game {
 }
 
 class ScoreCard {
-
+    constructor(number_of_players){
+        this.playerCount = number_of_players
+        this.ones = 0
+        this.twos = 0
+        this.threes = 0
+    }
 }
 
 class Dice {
+    constructor(elem, colour){
+        this.elem = elem
+        this.value = 1
+        this.colour = colour
+        this.imagePath = "/images/dice/64px/"
+        this.image = this.imagePath + this.colour + this.value + "-64.png"
+    }
 
+    changeValue(newValue){
+        this.value = newValue
+        this.image = this.imagePath + this.colour + this.value + "-64.png"
+        //css/ animation stuff?
+    }
 }
