@@ -1,64 +1,71 @@
 class Game {
     constructor(canvas, context) {
-        this.dice = this.createDiceSet();
+        this.dice = this.createDiceSet(5, "black");
         this.scores = new ScoreCard;
-
+        this.rolls = 0
+        this.players = 1
+        this.currentPlayer = 1
+        this.setUpEventListenersOnButtons()
         //other game level properties?
+    }
 
-
-        //keyboard controls
-        this.canvas.addEventListener("keydown", (e) => {
-            console.log("keydown detected")
-            if (e.key === " ") {
-            // space to (re)roll dice?
-            };
-            if (e.key.toLowerCase() === "r"){
-                // reset game
-            }
-            if (e.key === "Enter"){
-                // finalize dice selection and go to scorecard
-            }
-            if (e.key === "1"){
-                //toggle die 1
-            }
-            if (e.key === "2"){
-                //toggle die 2
-            }
-            if (e.key === "3"){
-                //toggle die 3
-            }
-            if (e.key === "4"){
-                //toggle die 4
-            }
-            if (e.key === "5"){
-                //toggle die 5
-            }
-
-            //etc
-        });
-
+    setUpEventListenersOnButtons(){
+        document.getElementById("rollButton").addEventListener('click', ()=>this.rollUnlockedDice())
+        document.getElementById("set1p").addEventListener('click', ()=>this.changePlayers(1))
+        document.getElementById("set2p").addEventListener('click', ()=>this.changePlayers(2))
+        document.getElementById("set3p").addEventListener('click', ()=>this.changePlayers(3))
+        document.getElementById("set4p").addEventListener('click', ()=>this.changePlayers(4))
+        document.getElementById("submit").addEventListener('click', ()=>this.submitScore())
 
     }
 
-    createDiceSet(number_of_dice){
-        diceSet = []
+    changePlayers(number_of_players){
+        this.players = number_of_players
+        this.setPlayers()
+    }
+
+    setPlayers(){
+        for (let i=this.players+1; i<=4; i++){
+            Array.from(document.getElementsByClassName("player"+i)).forEach(element => {
+                element.classList.add("hidden")
+            });
+        }
+        for (let i=1; i<= this.players; i++){
+            Array.from(document.getElementsByClassName("player"+i)).forEach(element => {
+                element.classList.remove("hidden")
+            });
+        }
+    }
+
+    changeColour(newColour){
+        this.dice = this.createDiceSet(5, newColour)
+    }
+
+    rollUnlockedDice(){
+        console.log("rolling unlcoked dice, set of dice: ", this.dice)
+        for (let die of this.dice){
+            console.log("looping over dice, current die: ", die)
+            die.roll()
+        }
+        this.rolls++
+        console.log(this.rolls)
+    }
+
+    createDiceSet(number_of_dice, colour){
+        console.log("creating dice set")
+        let diceSet = []
         for (let i = 1; i<=number_of_dice; i++){
            let diceElem = document.getElementById("dice"+i)
-           diceSet.push(new Dice(diceElem))
+           let diceObj = new Dice(diceElem, colour)
+           diceSet.push(diceObj)
+           console.log("added dice to array: ", diceElem, diceObj )
         }
-
+        console.log("after dice set creation loop: ", diceSet)
         return diceSet
     }
 
-    render(deltaTime) {
-        //fill in what to do every new frame
-        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
-        this.ctx.beginPath()
-        this.ctx.lineWidth = "6"
-        this.ctx.strokeStyle = "red"
-        this.ctx.rect(100,100, 600,600)
-        this.ctx.stroke()
-        this.ctx.fillText("game will be in this canvas, current framerate: " + Math.floor(1000/deltaTime), 250,350)
+    submitScore(){
+        console.log("attempting to submit score")
     }
 }
 
@@ -76,13 +83,54 @@ class Dice {
         this.elem = elem
         this.value = 1
         this.colour = colour
+        this.locked = false
         this.imagePath = "/images/dice/64px/"
         this.image = this.imagePath + this.colour + this.value + "-64.png"
+        this.elem.addEventListener('click',()=>this.toggleLock())
+    }
+
+    roll(){
+        console.log("trying to roll die")
+        if (this.locked){
+            return
+        }
+        let newValue = Math.ceil(Math.random()*6)
+
+        this.changeValue(newValue)
+        console.log("after roll, value: ", newValue, " die object: ", this)
+    }
+
+    lock(){
+        this.locked = true
+        this.elem.classList.add('locked')
+    }
+
+    unlock(){
+        this.locked = false
+        this.elem.classList.remove('locked')
+    }
+
+    toggleLock(){
+        console.log("toggle lock triggered", this.locked, this.lock, this)
+        if (this.locked){
+            this.unlock()
+        }else{
+            this.lock()
+        }
     }
 
     changeValue(newValue){
         this.value = newValue
         this.image = this.imagePath + this.colour + this.value + "-64.png"
+        this.elem.src = this.image
         //css/ animation stuff?
     }
 }
+
+window.addEventListener("load", ()=>{
+    const game = new Game()
+    console.log("game created: ", game)
+
+})
+
+let game = new Game()

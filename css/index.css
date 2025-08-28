@@ -12,14 +12,15 @@
 
 .dice {
     position: relative;
-    top: 25px;
+    top: 125px;
     left: 70px;
 }
 
 .locked {
     position: relative;
+    /* filter: invert(1); */
     top: 25px;
-    left: 50px;
+    /* left: 50px; */
 }
 
 #divider {
@@ -28,4 +29,8 @@
     width: 500px;
     position: relative;
     top: 100px;
+}
+
+.hidden {
+    display: none;
 }
