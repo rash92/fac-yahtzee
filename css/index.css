@@ -1,3 +1,11 @@
+:root {
+    --color1:#333;
+    --color2: rgb(238, 206, 148);
+    --color3:white;
+    --color4: rgb(92, 10, 92);
+
+}
+
 #rollArea {
     background-color: aqua;
     height: 500px;
@@ -33,4 +41,24 @@
 
 .hidden {
     display: none;
+}
+
+th{
+    background-color: var(--color1);
+    color: var(--color2);
+}
+
+tr:nth-child(even){
+    background-color: var(--color4);
+    color: var(--color3);
+}
+
+#game {
+    display: flex;
+    /* justify-content: center; */
+}
+
+#rollButton {
+    background-color: red;
+
 }

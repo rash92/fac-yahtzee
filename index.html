@@ -1,159 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="css/index.css" rel="stylesheet" />
     <script defer="defer" type="module" src="js/game.js"></script>
     <title>FAC Yahtzee</title>
-
-</head>
-<body>
-    <div id="root">Game goes here</div>
+  </head>
+  <body>
     <section id="rules">
-    <h2>rules of yahtzee</h2>
-    <p>lorem ipsum here are the rules of yahtzee</p>
+      <h2>Rules of Yahtzee</h2>
+      <p>lorem ipsum here are the rules of yahtzee</p>
     </section>
-    <section id="scorecard">
-        <table>
-            <tr>
-                <th>Type</th>
-                <th>Player 1</th>
-                <th>Player 2</th>
-                <th>Player 3</th>
-                <th>Player 4</th>
-            </tr>
-            <tr id="Ones">
-                <th>Ones</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            <tr id="twos">
-                <th>Twos</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-
-            </tr>
-            <tr id="threes">
-                <th>Threes</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="fours">
-                <th>Fours</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="fives">
-                <th>Fives</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="sixes">
-                <th>Sixes</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="sum">
-                <th>Sum</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="bonus">
-                <th>Bonus</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-
-            <tr id="3_of_a_kind">
-                <th>3 of a kind</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="4_of_a_kind">
-                <th>4 of a kind</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="full_house">
-                <th>Full house</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="small_straight">
-                <th>Small Straight</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="large_straight">
-                <th>Large Straight</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="yahtzee">
-                <th>Yahtzee</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="chance">
-                <th>Chance</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-            <tr id="total">
-                <th>Total</th>
-                <td class="player1">0</td>
-                <td class="player2">0</td>
-                <td class="player3">0</td>
-                <td class="player4">0</td>
-            </tr>
-        </table>
-    </section>
-    <button id="rollButton">Roll</button>
-    <button id="submit">Submit</button>
-    <button id="set1p">1 player</button>
-    <button id="set2p">2 players</button>
-    <button id="set3p">3 players</button>
-    <button id="set4p">4 players</button>
-
-    <section id="gameboard">
+    <section id="game">
+      <section id="gameboard">
+        <button id="rollButton">Roll</button>
+        <button id="submit">Submit</button>
+        <!-- <button id="set1p">1 player</button>
+        <button id="set2p">2 players</button>
+        <button id="set3p">3 players</button>
+        <button id="set4p">4 players</button> -->
         <div id="rollArea">
-        <div id="divider"></div>
-        <img id="dice1" class="dice" src="/images/dice/64px/black1-64.png">
-        <img id="dice2" class="dice" src="/images/dice/64px/black1-64.png">
-        <img id="dice3" class="dice" src="/images/dice/64px/black1-64.png">
-        <img id="dice4" class="dice" src="/images/dice/64px/black1-64.png">
-        <img id="dice5" class="dice" src="/images/dice/64px/black1-64.png">
+          <div id="divider"></div>
+          <img id="dice1" class="dice" src="/images/dice/64px/black1-64.png" />
+          <img id="dice2" class="dice" src="/images/dice/64px/black1-64.png" />
+          <img id="dice3" class="dice" src="/images/dice/64px/black1-64.png" />
+          <img id="dice4" class="dice" src="/images/dice/64px/black1-64.png" />
+          <img id="dice5" class="dice" src="/images/dice/64px/black1-64.png" />
         </div>
+      </section>
+      <section id="scorecard">
+        <button id="toggle_players_buttons">change players</button>
+        <button id="set1p">1 player</button>
+        <button id="set2p">2 players</button>
+        <button id="set3p">3 players</button>
+        <button id="set4p">4 players</button>
+        <button id="toggle_rules">hide rules</button>
+        <table>
+          <tr>
+            <th>Hand</th>
+            <th class="player1">Player 1</th>
+            <th class="player2">Player 2</th>
+            <th class="player3">Player 3</th>
+            <th class="player4">Player 4</th>
+          </tr>
+          <tr id="ones">
+            <th>Ones</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+
+          <tr id="twos">
+            <th>Twos</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="threes">
+            <th>Threes</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="fours">
+            <th>Fours</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="fives">
+            <th>Fives</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="sixes">
+            <th>Sixes</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="sum">
+            <th>Sum</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="bonus">
+            <th>Bonus</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+
+          <tr id="3_of_a_kind">
+            <th>3 of a kind</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="4_of_a_kind">
+            <th>4 of a kind</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="full_house">
+            <th>Full house</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="small_straight">
+            <th>Small Straight</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="large_straight">
+            <th>Large Straight</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="yahtzee">
+            <th>Yahtzee</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="chance">
+            <th>Chance</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+          <tr id="total">
+            <th>Total</th>
+            <td class="player1">0</td>
+            <td class="player2">0</td>
+            <td class="player3">0</td>
+            <td class="player4">0</td>
+          </tr>
+        </table>
+      </section>
     </section>
-</body>
+  </body>
 </html>

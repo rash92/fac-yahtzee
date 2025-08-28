@@ -3,28 +3,69 @@ class Game {
         this.dice = this.createDiceSet(5, "black");
         this.scores = new ScoreCard;
         this.rolls = 0
-        this.players = 1
+        this.players = 4
         this.currentPlayer = 1
+        this.rulesShown = true
+        this.playerButtonsShown = true
+        this.ScoreCard = new ScoreCard()
         this.setUpEventListenersOnButtons()
-        //other game level properties?
     }
 
     setUpEventListenersOnButtons(){
         document.getElementById("rollButton").addEventListener('click', ()=>this.rollUnlockedDice())
-        document.getElementById("set1p").addEventListener('click', ()=>this.changePlayers(1))
-        document.getElementById("set2p").addEventListener('click', ()=>this.changePlayers(2))
-        document.getElementById("set3p").addEventListener('click', ()=>this.changePlayers(3))
-        document.getElementById("set4p").addEventListener('click', ()=>this.changePlayers(4))
+        document.getElementById("toggle_players_buttons").addEventListener('click', ()=>this.toggleChangePlayers())
+        for (let i=1; i<=4;i++){
+            document.getElementById("set"+i+"p").addEventListener('click', ()=>this.setPlayers(i))
+        }
         document.getElementById("submit").addEventListener('click', ()=>this.submitScore())
+        document.getElementById("toggle_rules").addEventListener('click', ()=>this.toggleRules())
+        console.log("looping through scorecard", this.ScoreCard)
+        for (let key in this.ScoreCard){
+            let hand = this.ScoreCard[key].children[0]
+            //adding click event listener to the name of the hand, which should then submit
+            // the score if it can for the cell of that hand for the current player.
+            hand.addEventListener('click', ()=>this.selectHand(hand.innerText))
+            console.log(hand)
+        }
 
     }
 
-    changePlayers(number_of_players){
+    selectHand(hand){
+        console.log("tried to select hand: ", hand, "for event: ", e.target)
+        for ( let die of this.dice){
+            console.log("trying to score with: ", die.value)
+        }
+    }
+
+    toggleRules(){
+        let rulesElem = document.getElementById("rules")
+        let rulesButton = document.getElementById("toggle_rules")
+        if (this.rulesShown){
+            rulesElem.classList.add("hidden")
+            rulesButton.innerText = "show rules"
+        }else{
+            rulesElem.classList.remove("hidden")
+            rulesButton.innerText = "hide rules"
+        }
+        this.rulesShown = !this.rulesShown
+    }
+
+    toggleChangePlayers(){
+        if (this.playerButtonsShown){
+            for (let i=1; i<=4;i++){
+                document.getElementById("set"+i+"p").classList.add("hidden")
+            }
+            this.playerButtonsShown = false
+        } else {
+            for (let i=1; i<=4;i++){
+                document.getElementById("set"+i+"p").classList.remove("hidden")
+            }
+            this.playerButtonsShown = true
+        }
+    }
+
+    setPlayers(number_of_players){
         this.players = number_of_players
-        this.setPlayers()
-    }
-
-    setPlayers(){
         for (let i=this.players+1; i<=4; i++){
             Array.from(document.getElementsByClassName("player"+i)).forEach(element => {
                 element.classList.add("hidden")
@@ -35,6 +76,7 @@ class Game {
                 element.classList.remove("hidden")
             });
         }
+        this.toggleChangePlayers()
     }
 
     changeColour(newColour){
@@ -42,13 +84,10 @@ class Game {
     }
 
     rollUnlockedDice(){
-        console.log("rolling unlcoked dice, set of dice: ", this.dice)
         for (let die of this.dice){
-            console.log("looping over dice, current die: ", die)
             die.roll()
         }
         this.rolls++
-        console.log(this.rolls)
     }
 
     createDiceSet(number_of_dice, colour){
@@ -65,17 +104,45 @@ class Game {
     }
 
     submitScore(){
-        console.log("attempting to submit score")
+        // should highlight which hands are clickable, make them able to be clicked,
+        // change to next player and reset rolls so can't submit without rolling
+        // change that cell to be locked so it can't be edited until restarting the game
+        console.log("attempting to submit score for player: ", this.currentPlayer)
+        this.rolls = 0
+        this.currentPlayer = (this.currentPlayer) % (this.players)+1
+        console.log("changed to player: ", this.currentPlayer)
+    }
+
+    calculateScores(){
+        //should check current player,
+        // look at current dice values and figure out which hands
+        // are valid/ what scores you would get for each hand that has not been locked in yet.
+        // if all hands have been submitted, calculate bonus/ total and prompt to restart.
     }
 }
 
 class ScoreCard {
-    constructor(number_of_players){
-        this.playerCount = number_of_players
-        this.ones = 0
-        this.twos = 0
-        this.threes = 0
+    constructor(){
+        // each of these is a row from the scorecard, to access individual cells,
+        // do <key>.children[i] with i=0 for name of hand and i=1,2,3,4 for that player's score for that hand
+        this.ones = document.getElementById("ones")
+        this.twos = document.getElementById("twos")
+        this.threes = document.getElementById("threes")
+        this.fours = document.getElementById("fours")
+        this.fives = document.getElementById("fives")
+        this.sixes = document.getElementById("sixes")
+        this.sum = document.getElementById("sum")
+        this.bonus = document.getElementById("bonus")
+        this.threeOfAKind = document.getElementById("3_of_a_kind")
+        this.fourOfAKind = document.getElementById("4_of_a_kind")
+        this.fullHouse = document.getElementById("full_house")
+        this.smallStraight = document.getElementById("small_straight")
+        this.largeStraight = document.getElementById("large_straight")
+        this.yahtzee = document.getElementById("yahtzee")
+        this.chance = document.getElementById("chance")
+        this.total = document.getElementById("total")
     }
+
 }
 
 class Dice {
@@ -90,7 +157,6 @@ class Dice {
     }
 
     roll(){
-        console.log("trying to roll die")
         if (this.locked){
             return
         }
@@ -132,5 +198,3 @@ window.addEventListener("load", ()=>{
     console.log("game created: ", game)
 
 })
-
-let game = new Game()
