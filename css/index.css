@@ -1,11 +1,10 @@
 :root {
     --color1:#333;
-    --color2: rgb(238, 206, 148);
-    --color3:white;
-    --color4: rgb(92, 10, 92);
-    --color5: gray;
-    --color6: red;
-
+    --color2:rgb(238, 206, 148);
+    --color3:lightgray;
+    --color4:rgb(92, 10, 92);
+    --color5:gray;
+    --color6:green;
 }
 
 #lock {
@@ -17,10 +16,14 @@
     background-color: var(--color2);
     height: 100%;
     width: 500px;
+    position: relative;
+    top: 5px;
 }
 
 table {
     height: 100%;
+    position: relative;
+    top: 3px;
 }
 
 .dice {
@@ -31,9 +34,7 @@ table {
 
 .locked {
     position: relative;
-    /* filter: invert(1); */
     top: 20px;
-    /* left: 50px; */
 }
 
 #divider {
@@ -51,23 +52,13 @@ table {
 th{
     background-color: var(--color1);
     color: var(--color2);
-    /* border: inherit; */
 }
 
-tr:nth-child(even){
-    background-color: var(--color4);
-    color: var(--color3);
-}
-
-#sum, #bonus, #total {
-    background-color: var(--color2);
+tr{
+    background-color: var(--color3);
     color: var(--color1);
 }
 
-.unselectable {
-    background-color: var(--color5);
-    opacity: 0.5;
-}
 
 .clickableHand {
     filter: invert(1);
@@ -76,21 +67,39 @@ tr:nth-child(even){
 #game {
     display: flex;
     height: 100%;
-    /* justify-content: center; */
 }
 
-#rollButton {
-    background-color: var(--color6);
-
+#prompt{
+    background-color: var(--color4);
+    color: var(--color2);
+    text-align: center;
+    position: relative;
 }
 
 button {
-    /* background-color: var(--color2);
-    color: var(--color4); */
+    background-color: var(--color4);
+    color: var(--color2);
 }
 
 .currentPlayer {
-    background-color: var(--color6);
+    background-color: var(--color4);
+    color: var(--color3);
+}
+
+.unselectable {
+    background-color: var(--color1);
+    color: var(--color3);
+    /* opacity: 0.8; */
+}
+
+#sum, #bonus, #total{
+    background-color: var(--color2);
+    color: var(--color1);
+}
+
+#sum .currentPlayer, #bonus .currentPlayer, #total .currentPlayer{
+    background-color: var(--color2);
+    color: var(--color1);
 }
 
 #diceSelect {

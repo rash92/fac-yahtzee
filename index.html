@@ -8,13 +8,34 @@
     <title>FAC Yahtzee</title>
   </head>
   <body>
-    <button id="toggle_rules">hide rules</button>
+    <button id="toggleRulesButton">hide rules</button>
     <section id="rules">
       <h2>Rules of Yahtzee</h2>
-      <p>lorem ipsum here are the rules of yahtzee</p>
+      <p>The aim of the game is to roll 5 dice and create certain 'Hands' by analogy to poker. You can roll upto three times and then you must pick a hand to use your dice on. Between rolls you can 'lock' some dice and reroll others.</p>
+      <p> You can only select each hand once. After selecting a hand it's the next player's turn. After all players are unable to select any more hands, the game is over and the scores are added up to see who won.</p>
+      <p> You must roll at least once before you choose a hand. Click the dice to lock or unlock them and click the name of the hand you want to use your dice to score on.</p>
+      <p>The 'Upper Section' is the simplest, you just count how many dice you have of a give value, and add them up to get the score</p>
+      <p>'Sum' is adding up all of the upper section scores. If you have a sum of 63 or greater, you get a bonus 35 points</p>
+      <p>The 'Lower Section' has hands similar to poker. 3 of a kind and 4 of a kind are scored by adding up all of your dice if you meet the requirement, but score zero otherwise</p>
+      <p>Full House means you have 3 of one dice and 2 of another. It gives 25 points.</p>
+      <p>Small straight means having four sequential dice. It scores 30 points.</p>
+      <p>Large straight means having all five sequential dice. It scores 40 points</p>
+      <p>Yahtzee is having five of a kind. It scores 50 points. If you've already used up your yahtzee slot, it also counts as full house, 4 of a kind and 3 of a kind. </p>
+      <p>Chance is simply the all of your dice added together, with no special requirements. It's good to use if you have high values but don't meet anything else.</p>
+    </section>
+    <section>
+        <p id="prompt" class="hidden">player 1 to roll</p>
+        <button id="rollButton">Roll</button>
+        <button id="resetButton">Reset</button>
+        <button id="togglePlayersButton">change players</button>
+        <button id="set1p">1 player</button>
+        <button id="set2p">2 players</button>
+        <button id="set3p">3 players</button>
+        <button id="set4p">4 players</button>
+
     </section>
     <section id="game">
-      <section id="diceSelect">
+        <section id="diceSelect">
         <p>Dice Colour</p>
         <img id="black"  src="images/dice/64px/black1-64.png" />
         <img id="blue"  src="images/dice/64px/blue1-64.png" />
@@ -22,15 +43,8 @@
         <img id="purple" src="images/dice/64px/purple1-64.png" />
         <img id="red" src="images/dice/64px/red1-64.png" />
         <img id="yellow"  src="images/dice/64px/yellow1-64.png" />
-      </section>
-      <section id="gameboard">
-        <button id="rollButton">Roll</button>
-        <button id="submit">Submit</button>
-
-        <!-- <button id="set1p">1 player</button>
-        <button id="set2p">2 players</button>
-        <button id="set3p">3 players</button>
-        <button id="set4p">4 players</button> -->
+    </section>
+    <section id="gameboard">
         <div id="rollArea">
           <div id="divider"></div>
           <img id="lock" src="images/lock.svg" />
@@ -42,12 +56,7 @@
         </div>
       </section>
       <section id="scorecard">
-        <button id="toggle_players_buttons">change players</button>
-        <button id="set1p">1 player</button>
-        <button id="set2p">2 players</button>
-        <button id="set3p">3 players</button>
-        <button id="set4p">4 players</button>
-        <button id="setpotential">Potential</button>
+        <!-- <button id="setpotential">Potential</button> -->
         <table>
           <tr>
             <th>Hand</th>
