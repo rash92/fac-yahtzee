@@ -5,11 +5,11 @@ export default class DiceSet {
         this.diceArray = []
         for (let i=1; i<=number_of_dice; i++){
             let diceElem = document.getElementById("dice"+i)
-            this.diceArray.push(new Dice(diceElem, colour))
+            this.diceArray.push(new Dice(diceElem, colour, this))
         }
         this.valueCounts = {"1":0, "2":0,"3":0,"4":0,"5":0,"6":0}
         this.scores = {"ones":0, "twos":0, "threes":0, "fours":0, "fives":0, "sixes":0, "threeOfAKind":0, "fourOfAKind":0, "fullHouse":0, "smallStraight":0, "largeStraight":0, "yahtzee":0, "chance":0}
-
+        this.rolls = 0
     }
 
     //rolls all dice and then updates values
@@ -17,6 +17,7 @@ export default class DiceSet {
         for (let dice of this.diceArray){
             dice.roll()
         }
+        this.rolls++
         this.countValues()
         this.updateScores()
     }
@@ -169,10 +170,18 @@ export default class DiceSet {
         }
     }
 
+    reset(){
+        this.rolls = 0
+        for (let dice of this.diceArray){
+            dice.unlock()
+        }
+    }
+
 }
 
 class Dice {
-    constructor(elem, colour){
+    constructor(elem, colour, diceSet){
+        this.diceSet = diceSet
         this.elem = elem
         this.value = 1
         this.colour = colour
@@ -191,6 +200,9 @@ class Dice {
     }
 
     lock(){
+        if(this.diceSet.rolls == 0){
+            return
+        }
         this.locked = true
         this.elem.classList.add('locked')
     }

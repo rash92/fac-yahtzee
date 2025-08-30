@@ -4,7 +4,7 @@ import ScoreCard from "./scorecard.js"
 
 class Game {
     constructor() {
-        this.diceSet = new DiceSet(5, "black");
+        this.diceSet = new DiceSet(5, "black", this);
         this.scoreCard = new ScoreCard(this)
         this.ui = new UI(this)
         this.rolls = 0
@@ -13,24 +13,23 @@ class Game {
     }
 
     reset(){
-        this.rolls = 0
+        this.diceSet.rolls = 0
         this.setCurrentPlayer(1)
         this.scoreCard.reset()
     }
 
     rollDice(){
-        if (this.rolls >= 3){
+        if (this.diceSet.rolls >= 3){
             this.ui.setPrompt("Max 3 rolls, need to submit your score! Pick a hand")
             return
         }
         this.ui.hidePrompt()
         this.diceSet.rollDice()
         this.scoreCard.updatePotentialHands(this.diceSet)
-        this.rolls++
     }
 
     nextPlayer(){
-        this.rolls = 0
+        this.diceSet.reset()
         this.setCurrentPlayer(this.currentPlayer % this.players + 1)
     }
 

@@ -60,7 +60,7 @@ export default class ScoreCard {
     }
 
     submitScore(hand){
-        if (this.game.rolls == 0){
+        if (this.game.diceSet.rolls == 0){
             this.game.ui.setPrompt("Need to roll first!")
             return
         }
