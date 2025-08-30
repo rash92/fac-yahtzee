@@ -69,6 +69,10 @@ tr:nth-child(even){
     opacity: 0.5;
 }
 
+.clickableHand {
+    filter: invert(1);
+}
+
 #game {
     display: flex;
     height: 100%;
@@ -87,4 +91,13 @@ button {
 
 .currentPlayer {
     background-color: var(--color6);
+}
+
+#diceSelect {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    background-color: var(--color5);
+    color: var(--color2);
 }

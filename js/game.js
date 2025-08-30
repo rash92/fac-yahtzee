@@ -6,18 +6,25 @@ class Game {
         this.currentPlayer = 1
         this.rulesShown = true
         this.playerButtonsShown = true
-        this.ScoreCard = new ScoreCard(this)
+        this.scoreCard = new ScoreCard(this)
         this.setUpEventListenersOnButtons()
+
+        // for now start with 1p
+        this.setPlayers(2)
     }
 
     setUpEventListenersOnButtons(){
-        document.getElementById("rollButton").addEventListener('click', ()=>this.diceSet.rollDice())
+        document.getElementById("rollButton").addEventListener('click', ()=>this.rollDice())
         document.getElementById("toggle_players_buttons").addEventListener('click', ()=>this.toggleChangePlayers())
         for (let i=1; i<=4;i++){
             document.getElementById("set"+i+"p").addEventListener('click', ()=>this.setPlayers(i))
         }
-        document.getElementById("submit").addEventListener('click', ()=>this.submitScore())
+        document.getElementById("submit").addEventListener('click', ()=>this.nextPlayer())
         document.getElementById("toggle_rules").addEventListener('click', ()=>this.toggleRules())
+        let diceColours = ["black", "blue", "green", "purple", "red", "yellow"]
+        for (let colour of diceColours){
+            document.getElementById(colour).addEventListener('click', ()=> this.diceSet.changeColour(colour))
+        }
     }
 
     toggleRules(){
@@ -62,33 +69,29 @@ class Game {
         this.toggleChangePlayers()
     }
 
-    changeColour(newColour){
-        this.dice = this.createDiceSet(5, newColour)
+    rollDice(){
+        this.diceSet.rollDice()
+        this.scoreCard.updatePotentialHands(this.diceSet)
+        this.rolls++
+        console.log("rolled, current player: ", this.currentPlayer, " who is on roll number: ", this.rolls)
     }
 
-    // rollDice(){
-    //     for (let die of this.dice){
-    //         die.roll()
-    //     }
-    //     this.rolls++
-    // }
-
-    createDiceSet(number_of_dice, colour){
-        let diceSet = []
-        for (let i = 1; i<=number_of_dice; i++){
-           let diceElem = document.getElementById("dice"+i)
-           let diceObj = new Dice(diceElem, colour)
-           diceSet.push(diceObj)
-        }
-        return diceSet
+    nextPlayer(){
+        this.currentPlayer = (this.currentPlayer )% this.players + 1
+        this.rolls = 0
+        console.log("next player clicked, currentplayer is: ", this.currentPlayer, " out of: ", this.players)
     }
 
     submitScore(){
         // should highlight which hands are clickable, make them able to be clicked,
         // change to next player and reset rolls so can't submit without rolling
         // change that cell to be locked so it can't be edited until restarting the game
+
+        //temp to activate stuff to test
+        this.scoreCard.updatePotentialHands(this.diceSet)
+
         this.rolls = 0
-        this.currentPlayer = (this.currentPlayer) % (this.players)+1
+        this.nextPlayer()
     }
 
     calculateScores(){
@@ -111,14 +114,10 @@ class Hand {
         this.p2Elem = this.rowElem.children[2]
         this.p3Elem = this.rowElem.children[3]
         this.p4Elem = this.rowElem.children[4]
-        this.headerText = this.headerElem.innerText
-        this.p1Score = this.p1Elem.innerText
-        this.p2Score = this.p2Elem.innerText
-        this.p3Score = this.p3Elem.innerText
-        this.p4Score = this.p4Elem.innerText
+        this.potential = this.rowElem.children[5]
 
         //eventListeners
-        this.headerElem.addEventListener('click', ()=>this.submitScore())
+        // this.headerElem.addEventListener('click', ()=>this.submitScore())
         // this.headerElem.addEventListener('click', ()=>{
         //     let dice = this.scoreCard.Dice();
         //     let value = calcValue(dice)
@@ -126,9 +125,9 @@ class Hand {
         // })
     }
 
-    submitScore(diceValues, currentPlayer){
+    submitScore(newScore, currentPlayer){
         console.log("trying to submit score after being clicked")
-        this.updateScore(2,3)
+        this.updateScore(newScore,currentPlayer)
     }
 
     validForHand(diceValues, currentPlayer){
@@ -244,13 +243,20 @@ class Hand {
         }
     }
 
-    showPotentialScore(newScore, currentPlayer){
-        this["p"+currentPlayer+"Elem"].innerText = newScore
+    showPotentialScore(newScore){
+        this.potential.innerText = newScore
     }
 
     updateScore(newScore, currentPlayer){
-        this["p"+currentPlayer+"Elem"].innerText = newScore
-        this["p"+currentPlayer+"Elem"].classList.add("unselectable")
+        let cellElem = this["p"+currentPlayer+"Elem"]
+        console.log("update score in hand called with inputs: ", newScore, currentPlayer)
+        if(!cellElem.classList.contains("unselectable")){
+            cellElem.innerText = newScore
+        }
+        if (this.scoreCard.choosableHands.includes(this.handId)){
+
+            cellElem.classList.add("unselectable")
+        }
         
     }
 
@@ -266,9 +272,25 @@ class ScoreCard {
         this.allowedHands = ["ones", "twos", "threes", "fours", "fives", "sixes", "sum", "bonus", "threeOfAKind", "fourOfAKind", "fullHouse", "smallStraight", "largeStraight", "yahtzee", "chance", "total"]
         this.derivedHands = ["sum", "bonus", "total"]
         this.choosableHands = ["ones", "twos", "threes", "fours", "fives", "sixes", "threeOfAKind", "fourOfAKind", "fullHouse", "smallStraight", "largeStraight", "yahtzee", "chance"]
+        this.upperChoosable = ["ones", "twos", "threes", "fours", "fives", "sixes"]
+        this.lowerChoosable = ["threeOfAKind", "fourOfAKind", "fullHouse", "smallStraight", "largeStraight", "yahtzee", "chance"]
         for (let hand of this.allowedHands){
             this[hand] = new Hand(hand, this)
         }
+        for (let hand of this.choosableHands){
+            this[hand].headerElem.addEventListener('click', ()=>this.submitScore(hand))
+        }
+    }
+
+    submitScore(hand){
+        let newScore = this.game.diceSet.scores[hand]
+        let currentPlayer = this.game.currentPlayer
+        console.log("in scorecard method to update score, hand passed in is: ", hand, " score to add is: ", newScore, "currentPlayerRecieved is: ", currentPlayer)
+        this[hand].updateScore(newScore, currentPlayer)
+        this.checkGameOver()
+        this.sum.updateScore(this.calculateSum(currentPlayer), currentPlayer)
+        this.bonus.updateScore(this.calculateBonus(currentPlayer), currentPlayer)
+        this.total.updateScore(this.calculateTotal(currentPlayer), currentPlayer)
     }
 
     checkGameOver(){
@@ -276,19 +298,32 @@ class ScoreCard {
     }
 
     calculateSum(player){
-
+        let sum = 0
+        for (let hand of this.upperChoosable){
+            sum += Number(this[hand]["p"+player+"Elem"].innerText)
+        }
+        console.log("calculated sum as: ", sum)
+        return sum
     }
 
-    checkBonus(player){
-
+    calculateBonus(player){
+        return this.calculateSum(player) >= 63 ? 35 : 0
     }
 
     calculateTotal(player){
-
+        let total = 0
+        for (let hand of this.choosableHands){
+            total += Number(this[hand]["p"+player+"Elem"].innerText)
+        }
+        total += this.calculateBonus(player)
+        console.log("calculated total as: ", total)
+        return total
     }
 
-    calculatePotentialHands(player, diceValues){
-
+    updatePotentialHands(diceSet){
+        for (let hand of this.choosableHands){
+            this[hand].showPotentialScore(diceSet.scores[hand])
+        }
     }
 }
 
@@ -458,6 +493,12 @@ class DiceSet {
         return this.sum()
     }
 
+    changeColour(newColour){
+        for (let dice of this.diceArray){
+            dice.changeColour(newColour)
+        }
+    }
+
 }
 
 class Dice {
@@ -502,6 +543,13 @@ class Dice {
         this.image = this.imagePath + this.colour + this.value + "-64.png"
         this.elem.src = this.image
         //css/ animation stuff?
+    }
+
+    changeColour(newColour){
+        this.colour = newColour
+        this.image = this.imagePath + this.colour + this.value + "-64.png"
+        this.elem.src = this.image
+        console.log("trying to change colour")
     }
 }
 
