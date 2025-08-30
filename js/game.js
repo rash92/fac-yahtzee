@@ -13,9 +13,9 @@ class Game {
     }
 
     reset(){
-        this.diceSet.rolls = 0
         this.setCurrentPlayer(1)
         this.scoreCard.reset()
+        this.diceSet.reset()
     }
 
     rollDice(){
