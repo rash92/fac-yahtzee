@@ -89,7 +89,6 @@ button {
 .unselectable {
     background-color: var(--color1);
     color: var(--color3);
-    /* opacity: 0.8; */
 }
 
 #sum, #bonus, #total{
