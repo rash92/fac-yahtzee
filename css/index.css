@@ -3,33 +3,43 @@
     --color2: rgb(238, 206, 148);
     --color3:white;
     --color4: rgb(92, 10, 92);
+    --color5: gray;
+    --color6: red;
 
+}
+
+#lock {
+    position: relative;
+    top: 15px;
 }
 
 #rollArea {
     background-color: var(--color2);
-    height: 440px;
+    height: 100%;
     width: 500px;
 }
 
+table {
+    height: 100%;
+}
 
 .dice {
     position: relative;
     top: 125px;
-    left: 70px;
+    left: 25px;
 }
 
 .locked {
     position: relative;
     /* filter: invert(1); */
-    top: 25px;
+    top: 20px;
     /* left: 50px; */
 }
 
 #divider {
-    background-color: black;
+    background-color: var(--color1);
     height: 5px;
-    width: 500px;
+    width: 100%;
     position: relative;
     top: 100px;
 }
@@ -41,6 +51,7 @@
 th{
     background-color: var(--color1);
     color: var(--color2);
+    /* border: inherit; */
 }
 
 tr:nth-child(even){
@@ -48,12 +59,32 @@ tr:nth-child(even){
     color: var(--color3);
 }
 
+#sum, #bonus, #total {
+    background-color: var(--color2);
+    color: var(--color1);
+}
+
+.unselectable {
+    background-color: var(--color5);
+    opacity: 0.5;
+}
+
 #game {
     display: flex;
+    height: 100%;
     /* justify-content: center; */
 }
 
 #rollButton {
-    background-color: red;
+    background-color: var(--color6);
 
+}
+
+button {
+    /* background-color: var(--color2);
+    color: var(--color4); */
+}
+
+.currentPlayer {
+    background-color: var(--color6);
 }
