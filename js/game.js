@@ -82,6 +82,10 @@ class Game {
         console.log("next player clicked, currentplayer is: ", this.currentPlayer, " out of: ", this.players)
     }
 
+    getScore(hand){
+        return this.diceSet.score[hand]
+    }
+
     submitScore(){
         // should highlight which hands are clickable, make them able to be clicked,
         // change to next player and reset rolls so can't submit without rolling
@@ -283,7 +287,7 @@ class ScoreCard {
     }
 
     submitScore(hand){
-        let newScore = this.game.diceSet.scores[hand]
+        let newScore = this.game.getScore(hand)
         let currentPlayer = this.game.currentPlayer
         console.log("in scorecard method to update score, hand passed in is: ", hand, " score to add is: ", newScore, "currentPlayerRecieved is: ", currentPlayer)
         this[hand].updateScore(newScore, currentPlayer)
@@ -322,7 +326,7 @@ class ScoreCard {
 
     updatePotentialHands(diceSet){
         for (let hand of this.choosableHands){
-            this[hand].showPotentialScore(diceSet.scores[hand])
+            this[hand].showPotentialScore(this.game.getScore(hand))
         }
     }
 }
@@ -556,3 +560,5 @@ class Dice {
 window.addEventListener("load", ()=>{
     const game = new Game()
 })
+
+// TODO: set up checking if you've made too many rolls and disabling rolling when that happens, swapping between players after submitting a score and making clear whose turn it is, maybe extracting buttons to separate classes instead of directly in game class, separating stuff into files.
